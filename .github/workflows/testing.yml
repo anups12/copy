@@ -4,7 +4,7 @@ name: Testing Package
 
 on:
   release:
-    types: [published]
+    types: [published, push, pull]
 
 permissions:
   contents: read
