@@ -1,0 +1,78 @@
+{% extends 'to_do/base.html' %}
+{% load static %}
+{% block body%}
+
+
+<div class="container">
+  <form action="{% url 'country' %}"  method="get" >
+    <select class="country" id="country" aria-label="Default select example">
+      <option selected>Counrty</option>
+      <option id="India" value="1">INdia</option>
+      <option id="Us" value="2">Us</option>
+      <option id="Japan" value="3">Japan</option>
+    </select>
+    <select class="state" id="state" aria-label="Default select example">
+      <option selected>State</option>
+    </select>
+    <select class="city" id="city" aria-label="Default select example">
+      <option selected>City</option>
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+
+<script>
+
+const country = document.querySelector('.country');
+
+country.addEventListener('change', (event) => {
+  id=event.target.value
+  data={'id':id}
+  url='/state/'
+  fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrftoken
+  },
+  body: JSON.stringify(data),
+})
+  .then((response) =>{
+   return  response.json()
+})
+  .then((data)=>{
+let state = document.getElementById('state')
+for (const key in data['city']) {
+  state.innerHTML += `
+            <option id="${key}" value="${key}">${data['city'][key]}</option>` 
+}
+})
+});
+const state = document.querySelector('.state');
+state.addEventListener('change', (event) => {
+  id=event.target.value
+  console.log(id);
+  data={'id':id}
+  url='/city/'
+  fetch(url, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRFToken': csrftoken
+  },
+  body: JSON.stringify(data),
+})
+  .then((response) =>{
+   return  response.json()
+})
+  .then((data)=>{
+let state = document.getElementById('city')
+for (const key in data['city']) {
+  state.innerHTML += `<option id="${key}" value="${key}">${data['city'][key]}</option>` }
+})
+})
+</script>
+
+
+{% endblock body%}

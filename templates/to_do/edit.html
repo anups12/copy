@@ -1,0 +1,68 @@
+{% extends 'to_do/base.html' %}
+{% load static %}
+{% block body%}
+  <div class="row">
+    <div class="col-md-6 col-10 mx-auto">
+      <div class="container p-2">
+        <form action="" method="post" class="bg-info text-dark fw-bold fs-5 p-4">
+          {% csrf_token %}
+          <label for="">{{form.title.label}}</label>
+          {{form.title}}
+          <label for="">{{form.description.label}}</label>
+          {{form.description}}
+          <label for="">{{form.due_date.label}}</label>
+          {{form.due_date}}
+          <label for="">{{form.status.label}}</label>
+          {{form.status}}
+          <label for="">Tags</label>
+          {% for t in tags %}
+          <input class="form-check-input m-2" type="checkbox" name="{{t.name}}" value="{{t.id}}" {% if t in task.number_of_tags %}checked{% endif %} >{{t.name}}
+          {%endfor %}    
+          <input type="submit" value="Update task" id="edit" class="btn btn-outline-dark text-light w-100 my-2">
+        </form>
+      </div>
+    </div>
+    <div class="col-md-4 col-12">
+      <h3 class="fw-bold fs-4 text-success bg-dark my-2 text-center p-2">Add your custom Tags</h3>
+      <form action="{%url 'add_tags' %}" method="post" class="my-4 p-2 box">
+        {% csrf_token %}
+        <input type="text" name="tags" class="form-control my-2" placeholder="Enter tag names " >
+        <input type="submit" value="Add tag " class="btn btn-outline-dark">
+      </form>
+      <h3 class="fw-bold fs-4 text-success bg-dark my-2 text-center p-2">Available Tags</h3>
+      <table class="table table-dar table-striped text-center box">
+        <tr>
+          <th>Tags</th>
+        </tr>
+        {% for t in tags %}
+        <tr>
+          <td>{{t}}
+             <a class="btn tbn-outline-dark btn-sm text-danger " href="{% url 'delete_tags' t.id %}">Delete</a>
+          </td>
+        </tr>
+        {%endfor %}
+      </table>
+    </div>
+  </div>
+
+<script>
+  var submit = document.getElementById('edit')
+submit.addEventListener('click', function(e){
+    var due= document.getElementById('id_due_date').value
+    console.log(due);
+    var duedate= new Date(due)
+  var date = new Date()
+  if(duedate===null){
+  e.preventDefault()
+  alert("Enter due date ")
+}
+  if(duedate <= date){
+    e.preventDefault()
+    alert('Due date cant be less than current date ')
+}
+
+})
+</script>
+  {% endblock body%}
+
+

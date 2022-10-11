@@ -1,0 +1,28 @@
+{% extends 'to_do/base.html' %}
+{% load static %}
+{% block body%}
+
+<div class="row">
+    <div class="col-8 mx-auto p-3">
+        <div class="container my-2" >
+            <form action="" method="post" class="p-3">
+                {% csrf_token %}
+                <label for="" class="form-label fw-bold fs-4">{{form.first_name.label}}</label>
+                {{form.first_name}}
+                <label for="" class="form-label fw-bold fs-4">{{form.username.label}}</label>
+                {{form.username}}
+                <label for="" class="form-label fw-bold fs-4">{{form.email.label}}</label>
+                {{form.email}}
+                <label for="" class="form-label fw-bold fs-4">{{form.password1.label}}</label>
+                {{form.password1}} <br>
+                <label for="" class="form-label fw-bold fs-4">{{form.password2.label}}</label>
+                {{form.password2}} <br>
+                <input type="submit" value="Create Account" class="btn btn-outline-dark my-2 mx-auto">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body%}
