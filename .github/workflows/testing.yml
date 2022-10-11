@@ -1,12 +1,13 @@
-name: Testing Package
+name: Testing Django
 
 on:
   push:
     branches:
-     -master
+     - master
+
    pull_request:
     branches:
-     -master
+     - master
 
 
 jobs:
