@@ -1,7 +1,7 @@
 name: Testing Django
 
 on:
-  push
+  [push, pull]
 
 
 
